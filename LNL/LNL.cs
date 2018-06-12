@@ -22,7 +22,7 @@ namespace LNL
         [FunctionName("Queue")]
         public static HttpResponseMessage Queue([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
-            log.Info("C# HTTP Push trigger function processed a request.");
+            log.Info("C# HTTP Queue trigger function processed a request.");
 
             // parse query parameter
             var id = req.GetQueryNameValuePairs()
@@ -39,7 +39,7 @@ namespace LNL
         [FunctionName("Dequeue")]
         public static HttpResponseMessage Dequeue([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
-            log.Info("C# HTTP Pop trigger function processed a request.");
+            log.Info("C# HTTP Dequeue trigger function processed a request.");
 
             var queue = GetQueue();
 
@@ -47,7 +47,7 @@ namespace LNL
 
             if (message != null)
             {
-                Console.WriteLine(message.AsString);
+                log.Info(message.AsString);
                 queue.DeleteMessage(message);
             }
 
