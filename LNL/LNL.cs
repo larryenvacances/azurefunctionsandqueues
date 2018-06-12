@@ -29,10 +29,6 @@ namespace LNL
                 .FirstOrDefault(q => string.Compare(q.Key, "id", StringComparison.OrdinalIgnoreCase) == 0)
                 .Value;
 
-            var queue = GetQueue();
-            
-            queue.AddMessage(new CloudQueueMessage(id));
-
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
@@ -41,29 +37,12 @@ namespace LNL
         {
             log.Info("C# HTTP Pop trigger function processed a request.");
 
-            var queue = GetQueue();
-
-            var message = queue.GetMessage();
-
-            if (message != null)
-            {
-                Console.WriteLine(message.AsString);
-                queue.DeleteMessage(message);
-            }
-
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         private static CloudQueue GetQueue()
         {
-            var storageAccount = new CloudStorageAccount(new StorageCredentials(StorageAccountName, StorageAccountKey), true);
-
-            var client = storageAccount.CreateCloudQueueClient();
-
-            var queue = client.GetQueueReference(QueueName);
-            queue.CreateIfNotExists();
-
-            return queue;
+            return null;
         }
     }
 }
