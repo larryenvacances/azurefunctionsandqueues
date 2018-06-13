@@ -45,11 +45,10 @@ namespace LNL
 
             var message = queue.GetMessage();
 
-            if (message != null)
-            {
-                log.Info(message.AsString);
-                queue.DeleteMessage(message);
-            }
+            if (message == null) return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+
+            log.Info(message.AsString);
+            queue.DeleteMessage(message);
 
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
